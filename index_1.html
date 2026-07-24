@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>勤怠打刻</title>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <meta name="apple-mobile-web-app-title" content="勤怠打刻">
+  <meta name="theme-color" content="#0F6CBD">
+  <style>
+    :root{--blue:#0F6CBD;--blue-d:#0A4E8A;--muted:#6b7280;--line:#e3e8ee;}
+    html,body{margin:0;height:100%;}
+    body{font-family:-apple-system,"Yu Gothic","Hiragino Sans",sans-serif;background:#eef2f6;color:#1f2933;
+         display:flex;align-items:center;justify-content:center;padding:24px;}
+    .card{width:100%;max-width:380px;text-align:center;}
+    .logo{height:40px;margin-bottom:8px;}
+    .ttl{font-size:15px;color:var(--blue-d);font-weight:700;margin-bottom:30px;}
+    .go{display:block;background:var(--blue);color:#fff;text-decoration:none;font-size:23px;font-weight:800;
+        padding:26px;border-radius:18px;box-shadow:0 6px 16px rgba(15,108,189,.30);}
+    .go:active{transform:scale(.99);}
+    .err{color:#C5221F;font-size:15px;}
+    .hint{margin-top:28px;font-size:12.5px;color:var(--muted);line-height:1.7;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;}
+    .hint b{color:var(--blue-d);}
+    .foot{margin-top:18px;font-size:11px;color:#9aa4ad;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAAnCAYAAAAmTFXMAAAQN0lEQVR4nO2de7wVVRXHv+fwuLyUtyCYpgIKCQqK4IN8haCmqeErX6hZmtlHKzVTUytN85VpamaEqeWjlI8kXt9k4jME0lQQUEIEBFER5XLx3tsfvzPdOTN77Zk594gk8/18+ABnz+w558xee6/1W2vPKXDGVHJycj7ftP6s30DOBkF7oAfQE6gpvVYPLCv9Wf0Zva//RzoBXwC6lP5fB7yDvsd666Tc0NcvdgG2M9oWA39L0Udb4DCgQ+T1RcCUFOe3K53fztFWBB4B5qfopxcwBhgLDCv9fyOgVam9AVgFLAFmArWlP0tS9B1mD2BAhuPrgQXA6+g7ScOWwFeMtv8AD3nOLQJHIAO12hcCDwJNnn52Ab6JPm9fNGEWgE+AD4G3gOmlfqYi4/8fhdx1X684GbjZaFsKDATeS+hjV2Ca4/UlwKAU5+8GPGW0rQV2BF7ynN8T+B4wHtgs4VpRFgG3AtcSGage7gC+kfE6AMuBx4HrgX8kHDsOuMdoexhNaBZnAb/0tNcBB6EJ1EV74BLgOzR7Q0ksAu4EbqA0KRdTnpizbngEWGm09QB2SNHHwcbrmwA7pzh/H0/bNODfnvbRyGjOJ7uRg1aqH5f68BlPGNNdTaAHcDj6zs9POLbB07bG0zYa+KmnvR44DtvIOwK3A2eS3shB3+MP0KQM5Ia+vrEAeMFoawXslXB+O2B/o63oaQsfM9rTXgs0Gm3HA5OAbRKukYYBwH3At6vQVxI1yBh/WOV+vwjcgjsEArnp52F7CqD3dWiF138WuD/4T27o6xdN+OPoPfHfs52AbT3t+yJX0GIrYKjRVud5b0ejkCOqC7SE9sitHl/FPi0KwMXYnz0r7YHfA5t7jrkJuNLTviNwWoXXbwQuJ+Rt5Ia+/vEYtjs4GL9LfAjNYpeLrfG7/3sgd9HFDOAVx+vDgN8gEbDatAauQ0JUJcxHesM/SY75OwBnVHidKD8H9va0P4hcax8n4nfXnwPORbH79cDcUNtUYHL44M+r6r4tMATohlTJd4B5SGmtNKZbV7wKvAZs72jrDAxHSm+U9sB+CX23Qav6M0a7Ly6uJR6rtgWuKr0vH00oJJmGBmQB2AIYicRD3+TUCYlKo5BKn4XLkadRRBrFUcDPsCezMUhMXJbxOmGOQTG1xQzgBPwpxRo06Vr8CTgJeVkBXYBT0ARyBZF7FRh6EbkaA7El/gJaaeYDf0f+/wrHcT9CglCafh5DM88HxrFnoxgl6KtQOuc84/jhwIUolo26kWuA2aX3fTcSlVzx5nDg16VrNZX+rkepjTmez3Qdcp3D7/Upssd+9UjJdRl6ARnqXx1tQ4D+Kfofi1acqNF2A3Y3zllDZIUocSgKJ3xMR2LXY0i1D1NAA/oSZPAWO6CBfW3CtSwaUdbhGjTZXW4c1x15PZUa+lCax46Lt9BkszShn54oV+6iAXlQdZHX3wcuQ9rGG9GTwiv6MDRYkvgyipvmoJkrGrcNAEZk6OclJLq4Vpn+jr4WG/0diFIzXY32GvT5hgBHIoN+33HcTmiliXIscIHR90A0EURdrY2QipzVi6hFE4RrwOyGBJ7ojT6IdB7a9kgwi7rhI4FNjXNeAV6OvNYKODXhWpOQC2ql9JqQmzkWrbxHevo6DZiAcsZpcX1/96D76MprF7HHTxLdgYme8z9ECvvsFH11xnbbi8jGnjbanf2HY/Ssg3EA+tKi6ZhPMvYzGLgX5XijuPqKrgrBe5lA+ps0EbeRgy3IjMMWm47BfWN60FzBlIXpSIF3sTVxZbsdMvQ0tMdd/OFz2x8g/r0Pwj+hP48m8qS8PcgITkKeokU/kr2HNKzFny6zsgoWgdd3HfZC2YBqC55I2We9530UgEtRUVPqlFsaMc5XrdMBuVMbtbCf3ih2slyeJM5CRhVlORpwYaFiPnCj0U8Brc4uBuAeaF2wCzY6o5xmVj7ALuJoR9zNHYZfbY8SjeVrsFN3a3FX5I3FHmhrkSdjhWQuPkbx5cdGewG7Oi0LewEbG21ryV6ZV4+M+CijvQmFJhMz9Lkc/wS5KXAXWtV/grxQr9EnGfoNaFDtjmZcV4w6CL9wACoI2BWtGlfgFiL2RaWGWemKBl2UR5F7PgKt0mPRF3Mtbm0BZJhWSqSIcsVR9kfCkou2nv6S8JW7Rr2oA3G77daqMJJy9X4Q9kQxB5hl9GExE//qbDEdeNLTPphsi0HYCwlqBC719PE2jvg2gV2QIVtMQKm7LLyP+zsPU0AT/MUo7H0e5d2ddQxJhj4fJd6noTd8DPEZt4AMyseyUj8PI4HN9cE7Yq+mPvoi8SLKTcCbpX+vQvXI+5Ret+iD1FmL0ZQbdRHFoBY+DyGJadgT0kiaw5T22G77bbjTSp0pX8H3RSKVi8nE9YA2KOdu8QjZQ7iAqZ62zbALUFyMR97bBCSMPog/PXkvdmWiRV9sFX8KStlVEg74xmmU1ihsuADZ2aVENIgkQ4+uEjNxx469EvqJXmcK8YFQiL65lHTEPUgPc/RXh1+L2BL/QOpKeYnpUJT28ZFGCXfxNnaVXG+aVfmhuGfxOlSQMcPRVgAOCP17X+M6Dcg4onTArz1kXRXDuFKHAR3xF/xEGYVSTiegldeXxlsA/CpD32l4nuwpwYDJwNUVnNcF5dcnoUwKkL1gph3u2ctX7wvx+Hwo8UmkgfQbGcK8R3zFAe0YmoZixaHYK1aYNHHu0TQXhxxHcqHI1lSmPTThNjLQgA3Cpf1wD+AXkVL+gNHHbihW7YNcQBfzSv1kxafHrI8sRvf1rSr3ey5acCqhCWlPZ1LZ+9oHTVxFSDb0qNI6Hnd+b15CP+2QS7wlcv9decwVqFgkKws91x+C4qfnUBxzDn7XPKr8NxIPVXZAhtEZKfFh6ol7KptRmacCcoFdkxhIGKwBvmq0B3nvx3FrIn1QmeXO2KvzFNwrUp3xekClukTSuR9hfx+V8CHa5bUP7h1/aViJreLXAL8lXbrZRSMy1p2QZzKFbDn+IyltbEky9MNRjPM7FDtdQ3x1qsfe1hiwP8qXz0RxY2/HMbeTXfEEDeKrEo5pgz7wZeiGutTbAnEXeA3amBBeodqg7+UgZCxh7iS+V3sT3BpCGuZgbwkdhMIIV1qyjuaV/DXcwk4R+Br2RpcGbG9gDQotLPam8vLqPT1ti6jeQyqeQJP2UVS2wIT7uc7T3hWNbUuwTcNSNGEcgEK2I9FYS8pqtKG0SSnpZoxAM0mw4d3lItaSrBDWoAFvpTUeIrsyGeZWlJqxxKsw/VBlXLTyrAvacRRmNSrkeD3y+hGoAjB67LXEZ9wOxCeEtHyCvYWxGxJfXKHDdJq3kzZgK/jjsD2CN5EnZDHd0zaCynLewxPO+xfpw4ImFHZYx++IxkJLaULhYVINwG1U7tmFWYxSa0ch3WFSwvHbQMs3tcxGqqKvAMGiEW02OAv4Otlyri6uRgPsHPSl+9TTrsQ3FbjU++WoKiy6lbAP8ZV0KhK+ojpDK1o2oB7Crdq2Br5knDMpcs6DuAuN+uL2rkAlq74qtEexjagNEgKTauDDdECpV0sMbSy9p7QUkCd6n9G+MVLjKxVLA1qhSf4k/LH0KLQQVHMj2atIW/A9CKQjLbjou2gVHUM6hdU1YBpRKHAlir2qwVz0NI890Yx9KvaXsCvlwmI/4qvjAjSY/4zfZWxEK38T7pvdksH0ItlU7NXERbyX8Q+GKI2E9jIbPEO8LDbMUFQk0iXF9Toho/TVY8wlfWVZwBrg+2jCdtEX+APVWWnnoScE+TSEE4h7gj4OpDk7YvExCoktVkKyod8LfAvVop+CPsj+6CaOxy7TjFJL3MVojVZha1VqKXNRLnIP3HXBHSgvaR3sOCYwsFfwD7LZqEYAmnP3YVryMIZVCdeOMp14zBlslEnLQpJ1l9Voe6SPg9G93xt35qGA1P8HSH4c1E1kq3MHTdwL8D9BZjf8+8KzUIsq1SwKwEXYVXRhOiHR+i9IebeyRm1x6zQBqR4lNQ3NtDcjMeAWtFosTPFGw3yMCmXej7zeC7lPVuyelq5opnSV4r6H21DqKJ99XV9WEJs3ofdpcSvN6rwrD7wl/hxuErUZjp2C29WfTPoilidJF0r9EXtzRcAINMk8ibytU9GicRkKsaaiDU4+ZqJxWCm34N59F3By6U81uBp5gBZtkMDt260HSt0ORKHM1ShsGYdspoBstx/6bDsafTRS0lKSDD1N7jkNNchoLnK07Uyyap7E8cAvUDw7mvIc/RbIBYqykOaQoRVx97qJcgXdevrpu+gBheF+o4bWh1DxQgVMw3Y/w/ieAjOD8pp/i0bkyaWhDjgde4NQQCtURn0WKqu+EWkpo0jecfcRerhCpYUnIA3pTOw6jSIyJmubbtZrfRe/O90ZhTVWKrE78e3No5BWNAuJpC8gIz7Wc50FlHaFrusnzNyA24U8Ed3MStgExWEgFbIWlQFOQGmNp3HvKppMs0F2J/6lr6U8NFmJe6a+n/K4fDHxQdkFewtoGpaQvHKCBoH18MbVpPMMluCvN4/yIgrtPo0HenyCjMZ6UEYW5qECFotOaMxUmiEJswKFtr7JuT/yiFze7OnY+z56oezEMOPcMFdRmoTXtaGvRSp9dGdOEcUjWWfUApr5wkU8ReTKnIAUSdeNm4vc7YDNia+4K4nniu+gvIBmLXGXcgXxG1xDy4pIIJ2RTsLvnj9AcnrqSdKlKcPcjVKw1RJVQRPTaWTb9ZXERGwVHmR8N1Odx2LNQpOU737sgXSOcFjXDX2XLeUuQo8ODxt6pVtEo1iiS8Cr6AknUYIZNbzyJfVVRKtllk0DC5G7E853b0M8hn6H+IB/jfJ4/2lUzxzmI+JPECnQ8pztE/iV/9Uk/8DDs/gV/CaS87IWt6GcvO9x0GmZg55eYz3jPkyWcduIvD/r4SUglfvCDH36rn8XShn6OJZyAe8DZOiVejGNKG4/iVBKNWzo1apPdvUTfe163IUg/ZF7H6jhSX01oKzAWDRT+wSkFSiVshca8GFcO8zeIF7DH4hyTaU/E4nXEDThVt6z/JqIi9fx15271PYoq1D+22I5lW0vDZiKVqmLqaw++22082oU6QXIrOP2TSTc+lbas1FRVDWufxF+IRBUcHN06d8N6LPvhTIRj2Pv0Q+zBi0GhyBhscy7Cn6ppYDSS53K2vSlpP3ZmoCtURFG+Nlpy4jvZe+JO7/cCg3oj9BWyE0jfS3HfhzPVsht367UfwGJZS+jGdJKB/ZDsU/4Oktxi1dtUXxUQIKLa5V1ve93kUfQEqL9BhTQKpXmp5J6o3vkGqCrUPVZNQh+kmkMuie90fiq9k8yRe9dQAHF5a7+CqX3ZLnoRbRoBLUH3XGnSAuk26PRBX8KrIC+C6vCdCDKXuyEqje7ld7jKpTlmYlCrlkYE0/+k0w564L2aOKN/shi8OOA1apfzzH4vD7uOWf9YjVaeXx7zXM+RfIfcMjJ2QDIDT0nZwMgN/ScnA2A3NBzcjYAckPPydkAyA09J2cDIDf0nJwNgP8CpNiJq6AUGoEAAAAASUVORK5CYII=" alt="PRISM WORKS">
+    <div class="ttl">勤怠打刻</div>
+    <a class="go" id="go" href="#">出勤・退勤を打刻する</a>
+    <div class="hint" id="hint">
+      <b>初回のみ設定</b><br>
+      ブラウザのメニューから「ホーム画面に追加」しておくと、<br>次回からこのアイコンから開けます。
+    </div>
+    <div class="foot">PRISM WORKS</div>
+  </div>
+  <script>
+    var GAS = "https://script.google.com/macros/s/AKfycbwsUaLa6imZiDtJ0R9WgXB-XJEe4oD3pAqdPaDAMVY68TVfx2wyybTy2bLKMolQbRze5w/exec";
+    var t = new URLSearchParams(location.search).get('t') || '';
+    var go = document.getElementById('go');
+    if (t) {
+      go.href = GAS + '?t=' + encodeURIComponent(t);
+    } else {
+      go.style.display='none';
+      var e=document.createElement('div'); e.className='err';
+      e.textContent='打刻リンクが正しくありません（?t= が必要です）。管理者にご確認ください。';
+      go.parentNode.insertBefore(e, go);
+      document.getElementById('hint').style.display='none';
+    }
+  </script>
+</body>
+</html>
