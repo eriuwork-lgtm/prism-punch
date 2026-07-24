@@ -39,6 +39,11 @@
   <script>
     var GAS = "https://script.google.com/macros/s/AKfycbwsUaLa6imZiDtJ0R9WgXB-XJEe4oD3pAqdPaDAMVY68TVfx2wyybTy2bLKMolQbRze5w/exec";
     var t = new URLSearchParams(location.search).get('t') || '';
+    // トークンを端末内に記憶（URLから外れても復元できるように）
+    try {
+      if (t) { localStorage.setItem('prism_punch_token', t); }
+      else { t = localStorage.getItem('prism_punch_token') || ''; }
+    } catch (e) {}
     var go = document.getElementById('go');
     if (t) {
       go.href = GAS + '?t=' + encodeURIComponent(t);
